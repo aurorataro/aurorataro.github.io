@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/highlight.js@9.15.8/styles/atom-one-dark.css,gh/theme-nexmoe/hexo-theme-nexmoe@latest/source/lib/mdui_043tiny/css/mdui.css,gh/theme-nexmoe/hexo-theme-nexmoe@latest/source/lib/iconfont/iconfont.css,gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css?v=233" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css">
   
-  <link rel="stylesheet" href="/css/style.css?v=1618046020545">
+  <link rel="stylesheet" href="/css/style.css?v=1618046728680">
 <meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="mdui-drawer-body-left">
@@ -189,19 +189,19 @@
 
   <div class="nexmoe-post-footer">
     <section class="nexmoe-comment">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.css">
-<div id="gitalk"></div>
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.js"></script>
-<script type="text/javascript">
-    var gitalk = new Gitalk({
-        clientID: '5de66cfe6dc987e457f3',
-        clientSecret: 'de319f6c639bc78effefdeda4d72559fe03d8251',
-        id: window.location.pathname,
-        repo: 'aurorataro.github.io',
-        owner: 'aurorataro',
-        admin: 'aurorataro'
-    })
-    gitalk.render('gitalk')
+    <div id="gitment"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+    owner: 'aurorataro', // 你的 GitHub ID
+    repo: 'aurorataro.github.io', // 存储评论的 repo
+    oauth: {
+        client_id: '5de66cfe6dc987e457f3', // 你的 client ID
+        client_secret: 'de319f6c639bc78effefdeda4d72559fe03d8251' // 你的 client secret
+    },
+})
+gitment.render('gitment')
 </script>
 </section>
   </div>
@@ -227,7 +227,7 @@
 
 
 <script src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script>
- <script src="/js/app.js?v=1618046020546"></script>
+ <script src="/js/app.js?v=1618046728681"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
 <script>
