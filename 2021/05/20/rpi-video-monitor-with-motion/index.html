@@ -20,8 +20,9 @@
 <meta property="og:description" content="宿舍经常有外人出入，而且最近已经丢了不少东西了，虽然是价值不高，但是还是心有余悸。所以想用一些比较经济的方法，来24小时实时监控我的桌子。用现有的树莓派加上CSI摄像模块，就可以搭建起一套廉价的视频监控系统。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/aurorataro/cdn/website/img-in-post/image-20210521003420019.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/aurorataro/cdn/website/img-in-post/image-20210523184702851.png">
 <meta property="article:published_time" content="2021-05-20T15:59:57.000Z">
-<meta property="article:modified_time" content="2021-05-23T05:45:01.206Z">
+<meta property="article:modified_time" content="2021-05-23T10:49:30.492Z">
 <meta property="article:author" content="Aurorataro">
 <meta property="article:tag" content="记录">
 <meta name="twitter:card" content="summary">
@@ -29,7 +30,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/highlight.js@9.15.8/styles/atom-one-dark.css,gh/theme-nexmoe/hexo-theme-nexmoe@latest/source/lib/mdui_043tiny/css/mdui.css,gh/theme-nexmoe/hexo-theme-nexmoe@latest/source/lib/iconfont/iconfont.css,gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css?v=233" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css">
   
-  <link rel="stylesheet" href="/css/style.css?v=1621749582415">
+  <link rel="stylesheet" href="/css/style.css?v=1621766981236">
 <meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="mdui-drawer-body-left">
@@ -138,8 +139,8 @@
   
   <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
     <a><i class="nexmoefont icon-calendar-fill"></i>2021年05月20日</a>
-    <a><i class="nexmoefont icon-areachart"></i>392 字</a>
-    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 1 分钟</a>
+    <a><i class="nexmoefont icon-areachart"></i>1.5k 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 7 分钟</a>
 </div>
 
   <div class="nexmoe-post-right">
@@ -149,7 +150,7 @@
             <div class="nexmoe-toc">
                 
                 
-                  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E5%A4%87%E6%B8%85%E5%8D%95"><span class="toc-number">1.</span> <span class="toc-text">设备清单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">2.</span> <span class="toc-text">注意事项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E5%BC%8F%E5%BC%80%E5%A7%8B"><span class="toc-number">3.</span> <span class="toc-text">正式开始</span></a></li></ol>
+                  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E5%A4%87%E6%B8%85%E5%8D%95"><span class="toc-number">1.</span> <span class="toc-text">设备清单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">2.</span> <span class="toc-text">注意事项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E5%BC%8F%E5%BC%80%E5%A7%8B"><span class="toc-number">3.</span> <span class="toc-text">正式开始</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E5%B9%B6%E5%90%AF%E7%94%A8%E6%91%84%E5%83%8F%E5%A4%B4%E6%A8%A1%E5%9D%97"><span class="toc-number">3.1.</span> <span class="toc-text">连接并启用摄像头模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85motion"><span class="toc-number">3.2.</span> <span class="toc-text">安装motion</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%AE%9E%E7%8E%B0%E4%BB%BB%E6%84%8F%E5%9C%B0%E7%82%B9%E8%AE%BF%E9%97%AE"><span class="toc-number">3.3.</span> <span class="toc-text">内网穿透实现任意地点访问</span></a></li></ol></li></ol>
                 
             </div>
         </div>
@@ -177,15 +178,15 @@
 <li>摄像头的排线一定要插在开发板的CAMERA接口上，且卡扣一定要锁死。</li>
 <li>插拔摄像头先断电，否则会对摄像头造成不可逆伤害。</li>
 </ul>
-<h2 id="正式开始"><a href="#正式开始" class="headerlink" title="正式开始"></a>正式开始</h2><ul>
+<h2 id="正式开始"><a href="#正式开始" class="headerlink" title="正式开始"></a>正式开始</h2><h3 id="连接并启用摄像头模块"><a href="#连接并启用摄像头模块" class="headerlink" title="连接并启用摄像头模块"></a>连接并启用摄像头模块</h3><ul>
 <li><p>将开发板断电，将CSI模块插进CAMERA接口中。</p>
 </li>
 <li><p>在系统配置中启用对摄像头的支持（默认关闭）</p>
-<p>Raspbian系统</p>
+<p><strong>Raspbian系统</strong></p>
 <p>请见 <a target="_blank" rel="noopener" href="https://linux.cn/article-3650-1.html">https://linux.cn/article-3650-1.html</a></p>
-<p>其他系统</p>
+<p><strong>其他系统</strong></p>
 <p>这里以树莓派爱好者基地自编译的 Debian-Pi-Aarch64 为例 （项目地址：<a target="_blank" rel="noopener" href="https://github.com/openfans-community-offical/Debian-Pi-Aarch64%EF%BC%89">https://github.com/openfans-community-offical/Debian-Pi-Aarch64）</a></p>
-<pre><code class="shell">sudo vim /boot/config.txt
+<pre><code>sudo vim /boot/config.txt
 </code></pre>
 <p>找到以下字段，将</p>
 <img data-fancybox="gallery" data-sizes="auto" data-src="https://cdn.jsdelivr.net/gh/aurorataro/cdn/website/img-in-post/image-20210521003420019.png" alt="image-20210521003420019" class="lazyload">
@@ -203,6 +204,280 @@ vcgencmd get_camera #检查摄像头连接情况
 <p>则摄像头连接成功，默认的视频位置在 /dev/video0</p>
 </li>
 </ul>
+<h3 id="安装motion"><a href="#安装motion" class="headerlink" title="安装motion"></a>安装motion</h3><ul>
+<li><p>终端输入</p>
+<pre><code>sudo apt install motion -y
+</code></pre>
+</li>
+<li><p>修改motion的默认配置文件</p>
+<pre><code>sudo vim /etc/default/motion
+</code></pre>
+<p>具体配置文件作用见下表格</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>Range/Values Default</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>auto_brightness</td>
+<td>Values: on,off  Default: off</td>
+<td>让motion自动调节视频的的亮度，只适用于不带有自动亮度调节的摄像机</td>
+</tr>
+<tr>
+<td>brightness</td>
+<td>Values: 0-255  Default: 0 (disabled)</td>
+<td>调整摄像机的亮度</td>
+</tr>
+<tr>
+<td>saturation</td>
+<td>Values: 0 - 255  Default: 0 (disabled)</td>
+<td>调整摄像机的颜色饱和度</td>
+</tr>
+<tr>
+<td>hue</td>
+<td>Values: 0 - 255 Default: 0 (disabled)</td>
+<td>调整摄像机的色调</td>
+</tr>
+<tr>
+<td>contrast</td>
+<td>Values: 0-255  Default: 0 (disabled)</td>
+<td>调整摄像机的对比度</td>
+</tr>
+<tr>
+<td>daemon</td>
+<td>Values: on,off  Default: off</td>
+<td>以守护进程在后台运行。这个选项只能放在motion.conf，不能放在 thread config file</td>
+</tr>
+<tr>
+<td>emulate_motion</td>
+<td>Values: on, off  Default: off</td>
+<td>即使没有运动物体也要保存图像</td>
+</tr>
+<tr>
+<td>ffmpeg_output_movies</td>
+<td>Values: on, off Default: off</td>
+<td>是否保存视频</td>
+</tr>
+<tr>
+<td>ffmpeg_bps</td>
+<td>Values: 0 - 9999999  Default: 400000</td>
+<td>视频比特率</td>
+</tr>
+<tr>
+<td>ffmpeg_variable_bitrate</td>
+<td>Values: 0, 2 - 31  Default: 0 (disabled)</td>
+<td>动态比特率，如果开启这个功能ffmpeg_bps将被忽略，0为关闭，2为最好质量，31为最差质量</td>
+</tr>
+<tr>
+<td>ffmpeg_duplicate_frames</td>
+<td>Values: on, off  Default: on</td>
+<td>为了达到每秒的帧数要求，会复制一下帧填充空白时间，关掉这个功能后每个帧都紧接下一个帧，看起来像快进</td>
+</tr>
+<tr>
+<td>ffmpeg_output_debug_movies</td>
+<td>Values: on, off  Default: off</td>
+<td>调试模式，只看到变化的图像</td>
+</tr>
+<tr>
+<td>ffmpeg_video_codec</td>
+<td>Values: mpeg4, msmpeg4, swf, flv, ffv1, mov, ogg, mp4, mkv, hevc  Default: mpeg4</td>
+<td>视频格式</td>
+</tr>
+<tr>
+<td>framerate</td>
+<td>Values: 2 - 100  Default: 100 (no limit)</td>
+<td>帧速率，每秒多少帧</td>
+</tr>
+<tr>
+<td>frequency</td>
+<td>Values: 0 - 999999  Default: 0 (Not set)</td>
+<td>频率协调 Hz，（不清楚作用）</td>
+</tr>
+<tr>
+<td>lightswitch</td>
+<td>Values: 0 - 100  Default: 0 (disabled)</td>
+<td>忽略光照强度改变引起的变化</td>
+</tr>
+<tr>
+<td>locate_motion_mode</td>
+<td>Values: on, off, preview  Default: off</td>
+<td>给运动物体用方框标出</td>
+</tr>
+<tr>
+<td>locate_motion_style</td>
+<td>Values: box, redbox, cross, redcross  Default: box</td>
+<td>标记风格</td>
+</tr>
+<tr>
+<td>max_movie_time</td>
+<td>Values: 0 (infinite) - 2147483647  Default: 3600</td>
+<td>最大视频时间</td>
+</tr>
+<tr>
+<td>minimum_frame_time</td>
+<td>Values: 0 - 2147483647  Default: 0</td>
+<td>最小帧间隔，设置为0表示采用摄像头的帧率</td>
+</tr>
+<tr>
+<td>minimum_motion_frames</td>
+<td>Values: 1 - 1000s  Default: 1</td>
+<td>捕捉持续至少指定时间的运动帧</td>
+</tr>
+<tr>
+<td>movie_filename</td>
+<td>Values: Max 4095 characters  Default: %v-%Y%m%d%H%M%S</td>
+<td>视频的文件名</td>
+</tr>
+<tr>
+<td>ffmpeg_timelapse</td>
+<td>Values: 0-2147483647  Default: 0 (disabled)</td>
+<td>间隔时间，拍摄延时视频</td>
+</tr>
+<tr>
+<td>ffmpeg_timelapse_mode</td>
+<td>Values: hourly, daily, weekly-sunday, weekly-monday, monthly, manual  Default: daily</td>
+<td>延时拍摄模式</td>
+</tr>
+<tr>
+<td>timelapse_filename</td>
+<td>Values: Max 4095 characters  Default: %v-%Y%m%d-timelapse</td>
+<td>延时拍摄的文件名</td>
+</tr>
+<tr>
+<td>output_pictures</td>
+<td>Values: on,off,first,best,center  Default: on</td>
+<td>是否保存图片和模式设置</td>
+</tr>
+<tr>
+<td>output_debug_pictures</td>
+<td>Values: on,off  Default: off</td>
+<td>图片调试模式，只输出运动物体</td>
+</tr>
+<tr>
+<td>picture_filename</td>
+<td>Values: Max 4095 characters  Default: %v-%Y%m%d%H%M%S-%q</td>
+<td>图片文件名</td>
+</tr>
+<tr>
+<td>picture_type</td>
+<td>Values: jpeg,ppm  Default: jpeg</td>
+<td>图片类型</td>
+</tr>
+<tr>
+<td>post_capture</td>
+<td>Values: 0 - 2147483647  Default: 0 (disabled)</td>
+<td>运动在持续多少帧之后才被捕捉</td>
+</tr>
+<tr>
+<td>pre_capture</td>
+<td>Values: 0 - 100s  Default: 0 (disabled)</td>
+<td>输出图像包括捕捉到运动的前几秒</td>
+</tr>
+<tr>
+<td>quality</td>
+<td>Values: 1 - 100 Default: 75</td>
+<td>jpg图像的质量</td>
+</tr>
+<tr>
+<td>quiet</td>
+<td>Values: on, off  Default: off</td>
+<td>安静模式，检测到运动不输出哔</td>
+</tr>
+<tr>
+<td>rotate</td>
+<td>Values: 0, 90, 180, 270  Default: 0 (not rotated)</td>
+<td>旋转图像角度</td>
+</tr>
+<tr>
+<td>stream_auth_method</td>
+<td>Values: 0,1,2  Default: 0</td>
+<td>网页监控身份认证方法：0-无，1-基本，2-MD5</td>
+</tr>
+<tr>
+<td>stream_authentication</td>
+<td>Values: username:password Default: Not defined</td>
+<td>网页监控用户名和密码</td>
+</tr>
+<tr>
+<td>stream_limit</td>
+<td>Values: 0 - 2147483647  Default: 0 (unlimited)</td>
+<td>限制帧的数量</td>
+</tr>
+<tr>
+<td>stream_localhost</td>
+<td>Values: on, off Default: on</td>
+<td>是否只能本地访问网络摄像头</td>
+</tr>
+<tr>
+<td>stream_maxrate</td>
+<td>Values: 1 - 100  Default: 1</td>
+<td>限制网络摄像头帧速率</td>
+</tr>
+<tr>
+<td>stream_port</td>
+<td>Values: 0 - 65535  Default: 0 (disabled)</td>
+<td>网络摄像头端口</td>
+</tr>
+<tr>
+<td>stream_quality</td>
+<td>Values: 1 - 100 Default: 50</td>
+<td>网络摄像头传输质量</td>
+</tr>
+<tr>
+<td>switchfilter</td>
+<td>Values: on, off  Default: off</td>
+<td>过滤器开关，过滤器用来区分真正的运动和噪声</td>
+</tr>
+<tr>
+<td>target_dir</td>
+<td>Values: Max 4095 characters Default: Not defined = current working directory</td>
+<td>视频和图片的保存路径</td>
+</tr>
+<tr>
+<td>videodevice</td>
+<td>Values: Max 4095 characters  Default: /dev/video0</td>
+<td>摄像头设备名</td>
+</tr>
+<tr>
+<td>height</td>
+<td>Values: Device Dependent Default: 288</td>
+<td>图像高度，范围跟摄像机相关</td>
+</tr>
+<tr>
+<td>width</td>
+<td>Values: Device Dependent Default: 352</td>
+<td>图像宽度，范围跟摄像机相关</td>
+</tr>
+<tr>
+<td>process_id_file</td>
+<td>Values: Max 4095 characters  Default: Not defined</td>
+<td>保存PID的文件，推荐/var/run/motion.pid</td>
+</tr>
+<tr>
+<td>database_busy_timeout</td>
+<td>Values: 0 .. positive integer  Default: 0</td>
+<td>数据库等待超时时间，毫秒</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>启动motion</p>
+<pre><code>sudo motion
+</code></pre>
+</li>
+<li><p>修改配置文件之后，重启motion</p>
+<pre><code>sudo killall -SIGHUP motion
+</code></pre>
+</li>
+<li><p>然后浏览器进入 http://&lt;你的树莓派主机IP&gt;:8081</p>
+</li>
+<li><p>就可以看见你摄像头的画面了</p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="https://cdn.jsdelivr.net/gh/aurorataro/cdn/website/img-in-post/image-20210523184702851.png" alt="image-20210523184702851" class="lazyload"></p>
+</li>
+</ul>
+<h3 id="内网穿透实现任意地点访问"><a href="#内网穿透实现任意地点访问" class="headerlink" title="内网穿透实现任意地点访问"></a>内网穿透实现任意地点访问</h3><p>在云服务器部署frp服务端，在你的终端设备运行frp客户端。设置映射关系后，就可以做到任意地点访问，还可绑定自定义域名。网上教程过多，这里不再阐述。</p>
 
   </article>
 
@@ -270,7 +545,7 @@ vcgencmd get_camera #检查摄像头连接情况
 
 
 <script src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script>
- <script src="/js/app.js?v=1621749582416"></script>
+ <script src="/js/app.js?v=1621766981237"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
 <script>
