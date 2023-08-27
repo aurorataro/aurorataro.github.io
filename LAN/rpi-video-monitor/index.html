@@ -1,0 +1,1030 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://cdn.tarocloud.net/blog/main/logo-128.png">
+  <link rel="icon" href="https://cdn.tarocloud.net/blog/main/logo-64.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Aurorataro">
+  <meta name="keywords" content="blog,Aurorataro">
+  
+    <meta name="description" content="用现有的树莓派加上CSI摄像模块，就可以搭建起一套廉价的视频监控系统。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于motion和树莓派CSI摄像模块的实时视频监控系统（含内网穿透）">
+<meta property="og:url" content="http://blog.auro.ink/LAN/rpi-video-monitor/index.html">
+<meta property="og:site_name" content="Auro Blog">
+<meta property="og:description" content="用现有的树莓派加上CSI摄像模块，就可以搭建起一套廉价的视频监控系统。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/aurorataro/cdn@latest/img/image-20210521003420019.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/aurorataro/cdn@latest/img/202202122141825.png">
+<meta property="article:published_time" content="2021-05-20T15:59:57.000Z">
+<meta property="article:modified_time" content="2023-08-24T21:06:35.171Z">
+<meta property="article:author" content="Aurorataro">
+<meta property="article:tag" content="Raspberrypi">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://fastly.jsdelivr.net/gh/aurorataro/cdn@latest/img/image-20210521003420019.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>基于motion和树莓派CSI摄像模块的实时视频监控系统（含内网穿透） - Auro Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.auro.ink","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Auro Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://cdn.tarocloud.net/blog/main/banner1.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">基于motion和树莓派CSI摄像模块的实时视频监控系统（含内网穿透）</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-05-20 23:59" pubdate>
+          2021年5月20日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          33 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">基于motion和树莓派CSI摄像模块的实时视频监控系统（含内网穿透）</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年8月25日 凌晨
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>用现有的树莓派加上CSI摄像模块，就可以搭建起一套廉价的视频监控系统。</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="设备清单"><a href="#设备清单" class="headerlink" title="设备清单"></a>设备清单</h2><ul>
+<li><p>Raspberrypi4B+</p>
+</li>
+<li><p>CSI摄像模块</p>
+</li>
+<li><p>互联网连接（可选）</p>
+</li>
+</ul>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ul>
+<li>CSI摄像头可以不用买官方的版本，官方卖100来块还不如直接去买个米家监控来的方便，第三方的CSI摄像头只需20元左右，便宜实惠。</li>
+<li>如果没有在外浏览摄像头的需求，可以忽略内网穿透部分。</li>
+<li>摄像头的排线一定要插在开发板的CAMERA接口上，且卡扣一定要锁死。</li>
+<li>插拔摄像头先断电，否则会对摄像头造成不可逆伤害。</li>
+</ul>
+<h2 id="正式开始"><a href="#正式开始" class="headerlink" title="正式开始"></a>正式开始</h2><h3 id="连接并启用摄像头模块"><a href="#连接并启用摄像头模块" class="headerlink" title="连接并启用摄像头模块"></a>连接并启用摄像头模块</h3><ul>
+<li><p>将开发板断电，将CSI模块插进CAMERA接口中。</p>
+</li>
+<li><p>在系统配置中启用对摄像头的支持（默认关闭）</p>
+<p><strong>Raspbian系统</strong></p>
+<p>请见 <a target="_blank" rel="noopener" href="https://linux.cn/article-3650-1.html">https://linux.cn/article-3650-1.html</a></p>
+<p><strong>其他系统</strong></p>
+<p>这里以树莓派爱好者基地自编译的 Debian-Pi-Aarch64 为例 （项目地址：<a target="_blank" rel="noopener" href="https://github.com/openfans-community-offical/Debian-Pi-Aarch64%EF%BC%89">https://github.com/openfans-community-offical/Debian-Pi-Aarch64）</a></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">sudo vim <span class="hljs-regexp">/boot/</span>config.txt<br></code></pre></td></tr></table></figure>
+
+<p>找到以下字段，将</p>
+<img src="https://fastly.jsdelivr.net/gh/aurorataro/cdn@latest/img/image-20210521003420019.png" srcset="/img/loading.gif" lazyload alt="image-20210521003420019" style="zoom:150%;" />
+
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">start_x</span>=<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<p>取消注释</p>
+<p>然后执行</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">sudo</span> reboot <span class="hljs-comment">#重启系统</span><br>vcgencmd get_camera <span class="hljs-comment">#检查摄像头连接情况</span><br></code></pre></td></tr></table></figure>
+
+<p>如果得到</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-attribute">supported</span>=1 <span class="hljs-attribute">detected</span>=1<br></code></pre></td></tr></table></figure>
+
+<p>则摄像头连接成功，默认的视频位置在 &#x2F;dev&#x2F;video0</p>
+</li>
+</ul>
+<h3 id="安装motion"><a href="#安装motion" class="headerlink" title="安装motion"></a>安装motion</h3><ul>
+<li><p>终端输入</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">sudo apt <span class="hljs-keyword">install</span> motion -y<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>修改motion的默认配置文件</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gradle">sudo vim <span class="hljs-regexp">/etc/</span><span class="hljs-keyword">default</span>/motion<br></code></pre></td></tr></table></figure>
+
+<p>具体配置文件作用见下表格</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>Range&#x2F;Values Default</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>auto_brightness</td>
+<td>Values: on,off  Default: off</td>
+<td>让motion自动调节视频的的亮度，只适用于不带有自动亮度调节的摄像机</td>
+</tr>
+<tr>
+<td>brightness</td>
+<td>Values: 0-255  Default: 0 (disabled)</td>
+<td>调整摄像机的亮度</td>
+</tr>
+<tr>
+<td>saturation</td>
+<td>Values: 0 - 255  Default: 0 (disabled)</td>
+<td>调整摄像机的颜色饱和度</td>
+</tr>
+<tr>
+<td>hue</td>
+<td>Values: 0 - 255 Default: 0 (disabled)</td>
+<td>调整摄像机的色调</td>
+</tr>
+<tr>
+<td>contrast</td>
+<td>Values: 0-255  Default: 0 (disabled)</td>
+<td>调整摄像机的对比度</td>
+</tr>
+<tr>
+<td>daemon</td>
+<td>Values: on,off  Default: off</td>
+<td>以守护进程在后台运行。这个选项只能放在motion.conf，不能放在 thread config file</td>
+</tr>
+<tr>
+<td>emulate_motion</td>
+<td>Values: on, off  Default: off</td>
+<td>即使没有运动物体也要保存图像</td>
+</tr>
+<tr>
+<td>ffmpeg_output_movies</td>
+<td>Values: on, off Default: off</td>
+<td>是否保存视频</td>
+</tr>
+<tr>
+<td>ffmpeg_bps</td>
+<td>Values: 0 - 9999999  Default: 400000</td>
+<td>视频比特率</td>
+</tr>
+<tr>
+<td>ffmpeg_variable_bitrate</td>
+<td>Values: 0, 2 - 31  Default: 0 (disabled)</td>
+<td>动态比特率，如果开启这个功能ffmpeg_bps将被忽略，0为关闭，2为最好质量，31为最差质量</td>
+</tr>
+<tr>
+<td>ffmpeg_duplicate_frames</td>
+<td>Values: on, off  Default: on</td>
+<td>为了达到每秒的帧数要求，会复制一下帧填充空白时间，关掉这个功能后每个帧都紧接下一个帧，看起来像快进</td>
+</tr>
+<tr>
+<td>ffmpeg_output_debug_movies</td>
+<td>Values: on, off  Default: off</td>
+<td>调试模式，只看到变化的图像</td>
+</tr>
+<tr>
+<td>ffmpeg_video_codec</td>
+<td>Values: mpeg4, msmpeg4, swf, flv, ffv1, mov, ogg, mp4, mkv, hevc  Default: mpeg4</td>
+<td>视频格式</td>
+</tr>
+<tr>
+<td>framerate</td>
+<td>Values: 2 - 100  Default: 100 (no limit)</td>
+<td>帧速率，每秒多少帧</td>
+</tr>
+<tr>
+<td>frequency</td>
+<td>Values: 0 - 999999  Default: 0 (Not set)</td>
+<td>频率协调 Hz，（不清楚作用）</td>
+</tr>
+<tr>
+<td>lightswitch</td>
+<td>Values: 0 - 100  Default: 0 (disabled)</td>
+<td>忽略光照强度改变引起的变化</td>
+</tr>
+<tr>
+<td>locate_motion_mode</td>
+<td>Values: on, off, preview  Default: off</td>
+<td>给运动物体用方框标出</td>
+</tr>
+<tr>
+<td>locate_motion_style</td>
+<td>Values: box, redbox, cross, redcross  Default: box</td>
+<td>标记风格</td>
+</tr>
+<tr>
+<td>max_movie_time</td>
+<td>Values: 0 (infinite) - 2147483647  Default: 3600</td>
+<td>最大视频时间</td>
+</tr>
+<tr>
+<td>minimum_frame_time</td>
+<td>Values: 0 - 2147483647  Default: 0</td>
+<td>最小帧间隔，设置为0表示采用摄像头的帧率</td>
+</tr>
+<tr>
+<td>minimum_motion_frames</td>
+<td>Values: 1 - 1000s  Default: 1</td>
+<td>捕捉持续至少指定时间的运动帧</td>
+</tr>
+<tr>
+<td>movie_filename</td>
+<td>Values: Max 4095 characters  Default: %v-%Y%m%d%H%M%S</td>
+<td>视频的文件名</td>
+</tr>
+<tr>
+<td>ffmpeg_timelapse</td>
+<td>Values: 0-2147483647  Default: 0 (disabled)</td>
+<td>间隔时间，拍摄延时视频</td>
+</tr>
+<tr>
+<td>ffmpeg_timelapse_mode</td>
+<td>Values: hourly, daily, weekly-sunday, weekly-monday, monthly, manual  Default: daily</td>
+<td>延时拍摄模式</td>
+</tr>
+<tr>
+<td>timelapse_filename</td>
+<td>Values: Max 4095 characters  Default: %v-%Y%m%d-timelapse</td>
+<td>延时拍摄的文件名</td>
+</tr>
+<tr>
+<td>output_pictures</td>
+<td>Values: on,off,first,best,center  Default: on</td>
+<td>是否保存图片和模式设置</td>
+</tr>
+<tr>
+<td>output_debug_pictures</td>
+<td>Values: on,off  Default: off</td>
+<td>图片调试模式，只输出运动物体</td>
+</tr>
+<tr>
+<td>picture_filename</td>
+<td>Values: Max 4095 characters  Default: %v-%Y%m%d%H%M%S-%q</td>
+<td>图片文件名</td>
+</tr>
+<tr>
+<td>picture_type</td>
+<td>Values: jpeg,ppm  Default: jpeg</td>
+<td>图片类型</td>
+</tr>
+<tr>
+<td>post_capture</td>
+<td>Values: 0 - 2147483647  Default: 0 (disabled)</td>
+<td>运动在持续多少帧之后才被捕捉</td>
+</tr>
+<tr>
+<td>pre_capture</td>
+<td>Values: 0 - 100s  Default: 0 (disabled)</td>
+<td>输出图像包括捕捉到运动的前几秒</td>
+</tr>
+<tr>
+<td>quality</td>
+<td>Values: 1 - 100 Default: 75</td>
+<td>jpg图像的质量</td>
+</tr>
+<tr>
+<td>quiet</td>
+<td>Values: on, off  Default: off</td>
+<td>安静模式，检测到运动不输出哔</td>
+</tr>
+<tr>
+<td>rotate</td>
+<td>Values: 0, 90, 180, 270  Default: 0 (not rotated)</td>
+<td>旋转图像角度</td>
+</tr>
+<tr>
+<td>stream_auth_method</td>
+<td>Values: 0,1,2  Default: 0</td>
+<td>网页监控身份认证方法：0-无，1-基本，2-MD5</td>
+</tr>
+<tr>
+<td>stream_authentication</td>
+<td>Values: username:password Default: Not defined</td>
+<td>网页监控用户名和密码</td>
+</tr>
+<tr>
+<td>stream_limit</td>
+<td>Values: 0 - 2147483647  Default: 0 (unlimited)</td>
+<td>限制帧的数量</td>
+</tr>
+<tr>
+<td>stream_localhost</td>
+<td>Values: on, off Default: on</td>
+<td>是否只能本地访问网络摄像头</td>
+</tr>
+<tr>
+<td>stream_maxrate</td>
+<td>Values: 1 - 100  Default: 1</td>
+<td>限制网络摄像头帧速率</td>
+</tr>
+<tr>
+<td>stream_port</td>
+<td>Values: 0 - 65535  Default: 0 (disabled)</td>
+<td>网络摄像头端口</td>
+</tr>
+<tr>
+<td>stream_quality</td>
+<td>Values: 1 - 100 Default: 50</td>
+<td>网络摄像头传输质量</td>
+</tr>
+<tr>
+<td>switchfilter</td>
+<td>Values: on, off  Default: off</td>
+<td>过滤器开关，过滤器用来区分真正的运动和噪声</td>
+</tr>
+<tr>
+<td>target_dir</td>
+<td>Values: Max 4095 characters Default: Not defined &#x3D; current working directory</td>
+<td>视频和图片的保存路径</td>
+</tr>
+<tr>
+<td>videodevice</td>
+<td>Values: Max 4095 characters  Default: &#x2F;dev&#x2F;video0</td>
+<td>摄像头设备名</td>
+</tr>
+<tr>
+<td>height</td>
+<td>Values: Device Dependent Default: 288</td>
+<td>图像高度，范围跟摄像机相关</td>
+</tr>
+<tr>
+<td>width</td>
+<td>Values: Device Dependent Default: 352</td>
+<td>图像宽度，范围跟摄像机相关</td>
+</tr>
+<tr>
+<td>process_id_file</td>
+<td>Values: Max 4095 characters  Default: Not defined</td>
+<td>保存PID的文件，推荐&#x2F;var&#x2F;run&#x2F;motion.pid</td>
+</tr>
+<tr>
+<td>database_busy_timeout</td>
+<td>Values: 0 .. positive integer  Default: 0</td>
+<td>数据库等待超时时间，毫秒</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>启动motion</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">sudo motion</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>修改配置文件之后，重启motion</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">sudo killall -SIGHUP motion</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>然后浏览器进入 http:&#x2F;&#x2F;&lt;你的树莓派主机IP&gt;:8081</p>
+</li>
+<li><p>就可以看见你摄像头的画面了</p>
+<p><img src="https://fastly.jsdelivr.net/gh/aurorataro/cdn@latest/img/202202122141825.png" srcset="/img/loading.gif" lazyload alt="image-20210523184702851"></p>
+</li>
+</ul>
+<h3 id="内网穿透实现任意地点访问"><a href="#内网穿透实现任意地点访问" class="headerlink" title="内网穿透实现任意地点访问"></a>内网穿透实现任意地点访问</h3><p>在云服务器部署frp服务端，在你的终端设备运行frp客户端。设置映射关系后，就可以做到任意地点访问，还可绑定自定义域名。网上教程过多，这里不再阐述。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/LAN/" class="category-chain-item">LAN</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Raspberrypi/" class="print-no-link">#Raspberrypi</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>基于motion和树莓派CSI摄像模块的实时视频监控系统（含内网穿透）</div>
+      <div>http://blog.auro.ink/LAN/rpi-video-monitor/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Aurorataro</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年5月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Note/harmonyos-experience/" title="HarmonyOS 内测版本一周体验">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HarmonyOS 内测版本一周体验</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/LAN/mir4a-cracking-padavan/" title="小米4A千兆版 官方固件漏洞刷入Breed和Padavan精简版">
+                        <span class="hidden-mobile">小米4A千兆版 官方固件漏洞刷入Breed和Padavan精简版</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"aurorataro/aurorataro.github.io","repo-id":"MDEwOlJlcG9zaXRvcnkyNDgzOTYwMzE=","category":"Comment","category-id":"DIC_kwDODs44_84CY5l3","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/aurorataro" target="_blank" rel="nofollow noopener"><span>Aurorataro</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
