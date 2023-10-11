@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.auro.ink/about/index.html</loc>
+    
+    <lastmod>2023-10-11</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://blog.auro.ink/Note/ffxiv-allinone/</loc>
     
     <lastmod>2023-08-27</lastmod>
@@ -109,19 +118,10 @@
     <priority>0.6</priority>
   </url>
   
-  <url>
-    <loc>http://blog.auro.ink/about/index.html</loc>
-    
-    <lastmod>2023-08-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
 
   <url>
     <loc>http://blog.auro.ink/</loc>
-    <lastmod>2023-08-27</lastmod>
+    <lastmod>2023-10-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -129,98 +129,98 @@
   
   <url>
     <loc>http://blog.auro.ink/tags/Openwrt/</loc>
-    <lastmod>2023-08-27</lastmod>
+    <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.auro.ink/tags/Proxy/</loc>
-    <lastmod>2023-08-27</lastmod>
+    <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.auro.ink/tags/ffmepg/</loc>
-    <lastmod>2023-08-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.auro.ink/tags/Github/</loc>
-    <lastmod>2023-08-27</lastmod>
+    <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.auro.ink/tags/Game/</loc>
-    <lastmod>2023-08-27</lastmod>
+    <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.auro.ink/tags/FFXIV/</loc>
-    <lastmod>2023-08-27</lastmod>
+    <lastmod>2023-10-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.auro.ink/tags/Github/</loc>
+    <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.auro.ink/tags/HelloWorld/</loc>
-    <lastmod>2023-08-27</lastmod>
+    <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.auro.ink/tags/Huawei/</loc>
-    <lastmod>2023-08-27</lastmod>
+    <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.auro.ink/tags/HarmonyOS/</loc>
-    <lastmod>2023-08-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.auro.ink/tags/Mi/</loc>
-    <lastmod>2023-08-27</lastmod>
+    <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.auro.ink/tags/Linux/</loc>
-    <lastmod>2023-08-27</lastmod>
+    <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://blog.auro.ink/tags/DNS/</loc>
-    <lastmod>2023-08-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.auro.ink/tags/Nintendo-Switch/</loc>
-    <lastmod>2023-08-27</lastmod>
+    <loc>http://blog.auro.ink/tags/Mi/</loc>
+    <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.auro.ink/tags/Raspberrypi/</loc>
-    <lastmod>2023-08-27</lastmod>
+    <lastmod>2023-10-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.auro.ink/tags/DNS/</loc>
+    <lastmod>2023-10-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.auro.ink/tags/Nintendo-Switch/</loc>
+    <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -229,21 +229,21 @@
   
   <url>
     <loc>http://blog.auro.ink/categories/LAN/</loc>
-    <lastmod>2023-08-27</lastmod>
+    <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.auro.ink/categories/Note/</loc>
-    <lastmod>2023-08-27</lastmod>
+    <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.auro.ink/categories/Website/</loc>
-    <lastmod>2023-08-27</lastmod>
+    <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
