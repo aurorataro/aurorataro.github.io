@@ -128,7 +128,14 @@
 
   
   <url>
-    <loc>http://blog.auro.ink/tags/ffmepg/</loc>
+    <loc>http://blog.auro.ink/tags/Openwrt/</loc>
+    <lastmod>2023-10-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.auro.ink/tags/Proxy/</loc>
     <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -149,14 +156,7 @@
   </url>
   
   <url>
-    <loc>http://blog.auro.ink/tags/Openwrt/</loc>
-    <lastmod>2023-10-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.auro.ink/tags/Proxy/</loc>
+    <loc>http://blog.auro.ink/tags/ffmepg/</loc>
     <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -170,7 +170,7 @@
   </url>
   
   <url>
-    <loc>http://blog.auro.ink/tags/HelloWorld/</loc>
+    <loc>http://blog.auro.ink/tags/Linux/</loc>
     <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -191,7 +191,7 @@
   </url>
   
   <url>
-    <loc>http://blog.auro.ink/tags/Linux/</loc>
+    <loc>http://blog.auro.ink/tags/HelloWorld/</loc>
     <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -228,14 +228,14 @@
 
   
   <url>
-    <loc>http://blog.auro.ink/categories/Note/</loc>
+    <loc>http://blog.auro.ink/categories/LAN/</loc>
     <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://blog.auro.ink/categories/LAN/</loc>
+    <loc>http://blog.auro.ink/categories/Note/</loc>
     <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
