@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://blog.auro.ink/about/index.html</loc>
+    <loc>http://blog.auro.ink/About/index.html</loc>
     
     <lastmod>2023-10-11</lastmod>
     
@@ -128,20 +128,6 @@
 
   
   <url>
-    <loc>http://blog.auro.ink/tags/Openwrt/</loc>
-    <lastmod>2023-10-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.auro.ink/tags/Proxy/</loc>
-    <lastmod>2023-10-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://blog.auro.ink/tags/ffmepg/</loc>
     <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -157,6 +143,20 @@
   
   <url>
     <loc>http://blog.auro.ink/tags/FFXIV/</loc>
+    <lastmod>2023-10-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.auro.ink/tags/Openwrt/</loc>
+    <lastmod>2023-10-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.auro.ink/tags/Proxy/</loc>
     <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -205,13 +205,6 @@
   </url>
   
   <url>
-    <loc>http://blog.auro.ink/tags/Raspberrypi/</loc>
-    <lastmod>2023-10-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://blog.auro.ink/tags/DNS/</loc>
     <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -225,17 +218,24 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>http://blog.auro.ink/tags/Raspberrypi/</loc>
+    <lastmod>2023-10-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
   
   <url>
-    <loc>http://blog.auro.ink/categories/LAN/</loc>
+    <loc>http://blog.auro.ink/categories/Note/</loc>
     <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://blog.auro.ink/categories/Note/</loc>
+    <loc>http://blog.auro.ink/categories/LAN/</loc>
     <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
